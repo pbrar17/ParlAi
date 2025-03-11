@@ -14,7 +14,7 @@ import OddsFetcher from "./utils/odds";
 export default function Home() {
   return (
     <OddsFetcher
-      sportKey="upcoming"
+      sportKey="basketball_nba"
       regions="us"
       markets="h2h"
       oddsFormat="american"
