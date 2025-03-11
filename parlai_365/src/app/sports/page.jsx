@@ -6,6 +6,8 @@ import { getSports } from '../utils/api';
 
 const SportsPage = () => {
   const [sportsData, setSportsData] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSports = async () => {
