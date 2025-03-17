@@ -35,6 +35,28 @@ export default function Home() {
 
   const [oddsFormat, setOddsFormat] = React.useState(null);
 
+  const [submitData, setSubmittedData] =  React.useState(null);
+
+  function handleSubmit() {
+    // Check if all required selections are made
+    if (sports.length === 0 || market.length === 0 || !oddsFormat) {
+      alert("Please select at least one sport, one market, and an odds format.");
+      return;
+    }
+
+    // Save submitted data to state
+    setSubmittedData({ sports, market, oddsFormat });
+
+    console.log("Submitting:", { sports, market, oddsFormat });
+
+    // If you were making an API request, it would look like:
+    // fetch('/api/odds', {
+    //   method: 'POST',
+    //   body: JSON.stringify({ sports, market, oddsFormat }),
+    //   headers: { 'Content-Type': 'application/json' }
+    // });
+  }
+
   
   return (
     // <OddsFetcher
@@ -48,31 +70,75 @@ export default function Home() {
 
     <div>
       <p>Choose Sport:</p>
-      <button onClick={() => toggle("NBA")}> NBA </button>
-      <button onClick={() => toggle("NHL")}> NHL </button>
-      <button onClick={() => toggle("NFL")}> NFL </button>
+      <button 
+        onClick={() => toggle("basketball_nba")}
+        style={{ 
+          fontWeight: sports.includes("basketball_nba") ? "bold" : "normal",
+          backgroundColor: sports.includes("basketball_nba") ? "blue" : "white",
+          color: sports.includes("basketball_nba") ? "white" : "black"
+        }}
+      > NBA </button>
 
+      <button 
+        onClick={() => toggle("icehockey_nhl")}
+        style={{ 
+          fontWeight: sports.includes("icehockey_nhl") ? "bold" : "normal",
+          backgroundColor: sports.includes("icehockey_nhl") ? "blue" : "white",
+          color: sports.includes("icehockey_nhl") ? "white" : "black"
+        }}
+      > NHL </button>
+
+      <button 
+        onClick={() => toggle("americanfootball_nfl")}
+        style={{ 
+          fontWeight: sports.includes("americanfootball_nfl") ? "bold" : "normal",
+          backgroundColor: sports.includes("americanfootball_nfl") ? "blue" : "white",
+          color: sports.includes("americanfootball_nfl") ? "white" : "black"
+        }}
+      > NFL </button>
+
+      <p>Selected Sports: {sports.join(", ") || "None"}</p>
     </div>
 
     <div>
       <p>Choose Market:</p>
-    <button  onClick={() => toggle("h2h")}> Moneyline (h2h) </button>
-    <button  onClick={() => toggle("NBA")}> Spread </button>
-    <button> Other </button>
+    <button  onClick={() => toggleMarket("h2h")}
+      style={{
+        fontWeight: market.includes("h2h") ? "bold" : "normal",
+        backgroundColor: market.includes("h2h") ? "blue" : "white",
+        color: market.includes("h2h") ? "white" : "black"
+      }}
+      > Moneyline (h2h) </button>
+    <button  onClick={() => toggleMarket("spreads")}
+       style={{
+        fontWeight: market.includes("spreads") ? "bold" : "normal",
+        backgroundColor: market.includes("spreads") ? "blue" : "white",
+        color: market.includes("spreads") ? "white" : "black"
+      }}
+      > Spread </button>
+    {/* <button> Other </button> */}
+
+    <p>Selected Markets: {market.join(", ") || "None"}</p>
 
     </div>
 
     <div>
       <p>Choose Odds Format:</p>
       <button 
-        onClick={() => setOddsFormat("Decimal")} 
-        style={{ fontWeight: oddsFormat === "Decimal" ? "bold" : "normal" }}
+        onClick={() => setOddsFormat("decimal")} 
+        style={{ fontWeight: oddsFormat === "decimal" ? "bold" : "normal",
+          backgroundColor: oddsFormat ==="decimal" ? "blue" : "white",
+          color: oddsFormat === "decimal" ? "white" : "black"
+  }}
       >
         Decimal
       </button>
       <button 
-        onClick={() => setOddsFormat("American")} 
-        style={{ fontWeight: oddsFormat === "American" ? "bold" : "normal" }}
+        onClick={() => setOddsFormat("american")} 
+        style={{ fontWeight: oddsFormat === "american" ? "bold" : "normal",
+                 backgroundColor: oddsFormat ==="american" ? "blue" : "white",
+                 color: oddsFormat === "american" ? "white" : "black"
+         }}
       >
         American
       </button>
@@ -80,6 +146,29 @@ export default function Home() {
       <p>Selected Odds Format: {oddsFormat || "None"}</p>
 
     </div>
+
+    <button onClick={handleSubmit} style={{ marginTop: "20px", padding: "10px", fontSize: "16px" }}>
+        Submit All
+      </button>
+
+      {submitData && (
+        <div>
+          <h3>Submitted Data:</h3>
+          <p>Sports: {submitData.sports.join(", ")}</p>
+          <p>Markets: {submitData.market.join(", ")}</p>
+          <p>Odds Format: {submitData.oddsFormat}</p>
+
+          {/* Call the OddsFetcher component when submitted */}
+          <OddsFetcher
+            sportKey={submitData.sports.join(",")}
+            regions="us"
+            markets={submitData.market.join(",")}
+            oddsFormat={submitData.oddsFormat}
+            dateFormat="iso"
+          />
+        </div>
+      )}
+
 
     </>
     
