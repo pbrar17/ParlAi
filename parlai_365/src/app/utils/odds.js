@@ -28,7 +28,10 @@ const [sportsData, setSportsData] = useState(null);
             markets,
             oddsFormat,
             dateFormat,
-            bookmakers:"fanduel"
+            bookmakers:"fanduel",
+            includeLinks: "true",
+            includeSids: "true"
+            // includeBetLimits: "true"
           },
         });
       })
