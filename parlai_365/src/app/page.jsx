@@ -97,6 +97,16 @@ export default function Home() {
         }}
       > NFL </button>
 
+       <button 
+        onClick={() => toggle("baseball_mlb")}
+        style={{ 
+          fontWeight: sports.includes("baseball_mlb") ? "bold" : "normal",
+          backgroundColor: sports.includes("baseball_mlb") ? "blue" : "white",
+          color: sports.includes("baseball_mlb") ? "white" : "black"
+        }}
+      > MLB </button>
+
+
       <p>Selected Sports: {sports.join(", ") || "None"}</p>
     </div>
 
