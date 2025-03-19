@@ -6,6 +6,8 @@ import OddsFetcher from "./utils/odds";
 
 import React from "react";
 
+import OddsDisplay from "./utils/display";
+
 // import axios from 'axios';
 
 // const BASE_URL = 'https://api.the-odds-api.com';
@@ -169,13 +171,14 @@ export default function Home() {
           <p>Odds Format: {submitData.oddsFormat}</p>
 
           {/* Call the OddsFetcher component when submitted */}
-          <OddsFetcher
+          {/* <OddsDisplay /> */}
+         <div> <OddsFetcher
             sportKey={submitData.sports.join(",")}
             regions="us"
             markets={submitData.market.join(",")}
             oddsFormat={submitData.oddsFormat}
             dateFormat="iso"
-          />
+          /></div>
         </div>
       )}
 

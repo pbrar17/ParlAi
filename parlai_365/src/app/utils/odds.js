@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import formatOddsData from './format';
+import { Outcome } from '@google/generative-ai';
 const axios = require('axios');
 
 const OddsFetcher = ({ sportKey, regions, markets, oddsFormat, dateFormat }) => {
@@ -52,11 +54,49 @@ const [sportsData, setSportsData] = useState(null);
   // Show error message if API request fails
   if (error) return <div>Error: {error}</div>;
 
+  // const formmattedData = formatOddsData(oddsData);
+
   // Return the JSON data once fetched
   return (
     <div>
       <h2>Odds Data</h2>
-      <pre>{JSON.stringify(oddsData, null, 2)}</pre>
+      {/* <div>{RenderFormattedOdds(oddsData)}</div> */}
+      {/* <pre>{JSON.stringify(oddsData, null, 2)}</pre> */}
+
+      {
+        oddsData.map(record => {
+          return(
+            <div key={record.id}>
+              {record.home_team}
+              {record.away_team}
+              {record.bookmakers.map(bookmaker =>{
+                return(
+                  <div key = {bookmaker.key}>
+                    {bookmaker.title}
+                    {bookmaker.markets.map(market => {
+                      return(
+                        <div key={market.key}>
+                          {market.key}
+                          {market.outcomes.map(outcome => {
+                            return(
+                              <div key = {outcome.name}>
+                               Odds are {outcome.name}: {outcome.price},
+                               Here is a link: {outcome.link}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })
+      }
+
+      
     </div>
   );
 };
