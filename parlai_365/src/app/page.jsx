@@ -178,6 +178,7 @@ export default function Home() {
             markets={submitData.market.join(",")}
             oddsFormat={submitData.oddsFormat}
             dateFormat="iso"
+            bookmakers={"fanduel,draftkings,betmgm,betus"}
           /></div>
         </div>
       )}

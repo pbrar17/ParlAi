@@ -3,7 +3,7 @@ import formatOddsData from './format';
 import { Outcome } from '@google/generative-ai';
 const axios = require('axios');
 
-const OddsFetcher = ({ sportKey, regions, markets, oddsFormat, dateFormat }) => {
+const OddsFetcher = ({ sportKey, regions, markets, oddsFormat, dateFormat, bookmakers }) => {
   // State to store the data, loading state, and error
 //   const [data, setData] = useState(null);
 
@@ -30,7 +30,8 @@ const [sportsData, setSportsData] = useState(null);
             markets,
             oddsFormat,
             dateFormat,
-            bookmakers:"fanduel",
+            // bookmakers:"fanduel",
+            bookmakers,
             includeLinks: "true",
             includeSids: "true"
             // includeBetLimits: "true"
@@ -45,7 +46,7 @@ const [sportsData, setSportsData] = useState(null);
         setError(error.message); // Handle any errors
         setLoading(false);
       });
-  }, [sportKey, regions, markets, oddsFormat, dateFormat]);
+  }, [sportKey, regions, markets, oddsFormat, dateFormat, bookmakers]);
 
 
   // Show loading indicator
